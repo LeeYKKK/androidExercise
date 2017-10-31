@@ -1,36 +1,41 @@
 package cn.com.lyk.androidexercise;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.xutils.view.annotation.Event;
+import org.xutils.x;
 
-import cn.com.lyk.been.CostBeen;
-
-public class MainActivity extends AppCompatActivity {
-    private ListView listView;
-    private List<CostBeen> costBeenList;
+public class MainActivity extends AppCompatActivity{
+    private Button btLv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView= (ListView) findViewById(R.id.lvMain);
-        costBeenList=new ArrayList<>();
-        initCostData();
-        listView.setAdapter(new CostListAdapter(this,costBeenList));
+        initView();
+        x.view().inject(this);
+    }
+
+
+    @Event(type = View.OnClickListener.class, value = {R.id.btLv})
+    private void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btLv:
+                Toast.makeText(this, "ListView", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(this,ListviewActivity.class);
+                startActivity(intent);
+                break;
+        }
 
     }
 
-    private void initCostData() {
-        for(int i=0; i<20; i++){
-            CostBeen costBeen=new CostBeen();
-            costBeen.setCostTite("今天花钱买了一条狗很开心");
-            costBeen.setCostDate("2017-10-17");
-            costBeen.setCostMoney("50万");
-            costBeenList.add(costBeen);
-        }
+    private void initView() {
+        btLv = (Button) findViewById(R.id.btLv);
+
     }
 }
